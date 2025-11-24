@@ -4,8 +4,6 @@ package weightcalculator;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,9 +13,9 @@ import javafx.stage.Stage;
 /**
  *
  * @author 2483268
- * 
+ *
  */
-public class WeightCalculator extends Application{
+public class WeightCalculator extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -25,10 +23,11 @@ public class WeightCalculator extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("planetScreen.fxml"));
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-    
+
 }
