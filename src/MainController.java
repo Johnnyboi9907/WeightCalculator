@@ -10,12 +10,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -24,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author 2483268
  */
-public class WeightController implements Initializable {
+public class MainController {
 
     private Stage stage;
     private Scene scene;
@@ -60,12 +62,12 @@ public class WeightController implements Initializable {
     @FXML
     private MenuBar menuBar;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    @FXML
+    public void initialize() {
+        
     }
 
-// close the program
+    // close the program
     @FXML
     void closeProgram(ActionEvent event) {
         stage = (Stage) scenePane.getScene().getWindow();
