@@ -1,5 +1,6 @@
 package weightcalculator;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -18,7 +19,7 @@ public class PlanetController {
     private ImageView imgView;
 
     @FXML
-    private ListView<Planet > listView;
+    private ListView<String> listView;
 
     @FXML
     private Label nameLbl;
@@ -26,7 +27,7 @@ public class PlanetController {
     @FXML
     private Button selectBtn;
 
-    Planet currentPlanet;
+    private String[] planets;
 
     @FXML
     public void initialize() {
@@ -37,30 +38,59 @@ public class PlanetController {
         Planet jupiter = new Planet("Jupiter", 24.5, new Image("images/Jupiter.png"));
         Planet sun = new Planet("Sun", 275, new Image("images/Sun.jpg"));
 
-         // Add planets to ListView
-        listView.getItems().addAll(earth, moon, mars, venus, jupiter, sun);
+        // create an array of Strings containing all the names of the planets
+        planets = new String[]{"Earth", "Moon", "Mars", "Venus", "Jupiter", "Sun"};
 
-        // Display the Planet name instead of the object reference
-        listView.setCellFactory(param -> new javafx.scene.control.ListCell<Planet>() {
+        // Add all Planet objects to ListView
+        listView.getItems().addAll(planets);
+
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
-            protected void updateItem(Planet planet, boolean empty) {
-                super.updateItem(planet, empty);
-                setText(empty || planet == null ? null : planet.getName());
-            }
-        });
+            public void changed(ObservableValue<? extends String> ov, String oldVal, String newVal) {
 
-        // Listener to update UI when a planet is selected
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Planet>() {
-            @Override
-            public void changed(ObservableValue<? extends Planet> obs, Planet oldVal, Planet newVal) {
-                if (newVal != null) {
-                    currentPlanet = newVal;
+                if (newVal == null) {
+                    return;
+                }
 
-                    nameLbl.setText(newVal.getName());
-                    accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(newVal.getAcceleration()) + " m/s2");
-                    imgView.setImage(newVal.getImage());
+                switch (newVal) {
+                    case "Earth":
+                        nameLbl.setText(earth.getName());
+                        accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(earth.getAcceleration()) + " m/s\u00B2");
+                        imgView.setImage(earth.getImage());
+                        break;
+
+                    case "Moon":
+                        nameLbl.setText(moon.getName());
+                        accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(moon.getAcceleration()) + " m/s\u00B2");
+                        imgView.setImage(moon.getImage());
+                        break;
+
+                    case "Mars":
+                        nameLbl.setText(mars.getName());
+                        accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(mars.getAcceleration()) + " m/s\u00B2");
+                        imgView.setImage(mars.getImage());
+                        break;
+
+                    case "Venus":
+                        nameLbl.setText(venus.getName());
+                        accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(venus.getAcceleration()) + " m/s\u00B2");
+                        imgView.setImage(venus.getImage());
+                        break;
+
+                    case "Jupiter":
+                        nameLbl.setText(jupiter.getName());
+                        accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(jupiter.getAcceleration()) + " m/s\u00B2");
+                        imgView.setImage(jupiter.getImage());
+                        break;
+
+                    case "Sun":
+                        nameLbl.setText(sun.getName());
+                        accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(sun.getAcceleration()) + " m/s\u00B2");
+                        imgView.setImage(sun.getImage());
+                        break;
                 }
             }
         });
+
     }
 }
