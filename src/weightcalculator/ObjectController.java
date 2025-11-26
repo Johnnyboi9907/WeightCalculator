@@ -1,13 +1,21 @@
 package weightcalculator;
 
+import java.io.IOException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class ObjectController {
 
@@ -26,7 +34,12 @@ public class ObjectController {
     @FXML
     private Label nameLbl;
     
-    private String[] objects;
+    private String[] objectStrs;
+    private String selectedObject;
+    private Object[] objects;
+    private Parent root;
+    private Scene scene;
+    private Stage stage;
     
     @FXML
     public void initialize() {
@@ -37,9 +50,11 @@ public class ObjectController {
         Object gorilla = new Object("Gorilla", 160000, new Image("images/gorilla.png"));
         Object car = new Object("Bugatti Chiron", 2000000, new Image("images/car.png"));
         
-        objects = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"};
+        objectStrs = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"};
+        objects = new Object[]{apple, books, gold, human, gorilla, car};
         
-        listView.getItems().addAll(objects);
+        listView.getItems().addAll(objectStrs);
+        //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -54,44 +69,59 @@ public class ObjectController {
                         nameLbl.setText(apple.getName());
                         massLbl.setText("Mass = " + String.valueOf(apple.getMass()) + " g");
                         imgView.setImage(apple.getImage());
+                        addBtn.setDisable(false);
                         break;
 
                     case "Pile of books":
                         nameLbl.setText(books.getName());
                         massLbl.setText("Mass = " + String.valueOf(books.getMass()) + " g");
                         imgView.setImage(books.getImage());
+                        addBtn.setDisable(false);
                         break;
                         
                     case "Gold bar":
                         nameLbl.setText(gold.getName());
                         massLbl.setText("Mass = " + String.valueOf(gold.getMass()) + " g");
                         imgView.setImage(gold.getImage());
+                        addBtn.setDisable(false);
                         break;
                         
                     case "Human":
                         nameLbl.setText(human.getName());
                         massLbl.setText("Mass = " + String.valueOf(human.getMass()) + " g");
                         imgView.setImage(human.getImage());
+                        addBtn.setDisable(false);
                         break; 
                         
                     case "Gorilla":
                         nameLbl.setText(gorilla.getName());
                         massLbl.setText("Mass = " + String.valueOf(gorilla.getMass()) + " g");
                         imgView.setImage(gorilla.getImage());
+                        addBtn.setDisable(false);
                         break;    
                         
                     case "Bugatti Chiron":
                         nameLbl.setText(car.getName());
                         massLbl.setText("Mass = " + String.valueOf(car.getMass()) + " g");
                         imgView.setImage(car.getImage());
+                        addBtn.setDisable(false);
                         break;    
                 }
             }
         });
     }
     
-}
+        @FXML
+    void addToScale(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        
+    }
 
+}
 /*
  * List of objects:
  * mass of an apple = 100g

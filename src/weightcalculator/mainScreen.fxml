@@ -6,11 +6,12 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="scenePane" prefHeight="800.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.MainController">
+<AnchorPane id="AnchorPane" fx:id="scenePane" prefHeight="800.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.MainController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
@@ -20,7 +21,7 @@
             <Font name="System Bold Italic" size="50.0" />
          </font>
       </Label>
-      <Label layoutX="286.0" layoutY="179.0" text="Weight Calculator">
+      <Label layoutX="286.0" layoutY="99.0" text="Weight Calculator">
          <font>
             <Font name="System Bold Italic" size="50.0" />
          </font>
@@ -50,5 +51,6 @@
             </Menu>
         </menus>
       </MenuBar>
+      <ImageView fx:id="imgView" fitHeight="300.0" fitWidth="300.0" layoutX="350.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
