@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.ObjectController">
+<SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.ObjectController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
@@ -21,7 +21,7 @@
             <HBox layoutX="176.0" layoutY="693.0" spacing="300.0">
                <children>
                   <Label fx:id="massLbl" text="Mass = 0kg" />
-                  <Button fx:id="addBtn" mnemonicParsing="false" text="Add to scale" />
+                  <Button fx:id="addBtn" disable="true" mnemonicParsing="false" onAction="#addToScale" text="Add to scale" />
                </children>
             </HBox>
          </children></AnchorPane>
