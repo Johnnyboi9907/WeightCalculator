@@ -1,9 +1,12 @@
 package weightcalculator;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ObjectController {
@@ -23,9 +26,68 @@ public class ObjectController {
     @FXML
     private Label nameLbl;
     
+    private String[] objects;
+    
     @FXML
     public void initialize() {
-        listView.getItems().addAll("Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron");
+        Object apple = new Object("Apple", 100, new Image("images/apple.jpg"));
+        Object books = new Object("Pile of books", 700, new Image("images/books.png"));
+        Object gold = new Object("Gold bar", 1000, new Image("images/goldbar.png"));
+        Object human = new Object("Human", 70000, new Image("images/person.png"));
+        Object gorilla = new Object("Gorilla", 160000, new Image("images/gorilla.png"));
+        Object car = new Object("Bugatti Chiron", 2000000, new Image("images/car.png"));
+        
+        objects = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"};
+        
+        listView.getItems().addAll(objects);
+        
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String oldVal, String newVal) {
+
+                if (newVal == null) {
+                    return;
+                }
+
+                switch (newVal) {
+                    case "Apple":
+                        nameLbl.setText(apple.getName());
+                        massLbl.setText("Mass = " + String.valueOf(apple.getMass()) + " g");
+                        imgView.setImage(apple.getImage());
+                        break;
+
+                    case "Pile of books":
+                        nameLbl.setText(books.getName());
+                        massLbl.setText("Mass = " + String.valueOf(books.getMass()) + " g");
+                        imgView.setImage(books.getImage());
+                        break;
+                        
+                    case "Gold bar":
+                        nameLbl.setText(gold.getName());
+                        massLbl.setText("Mass = " + String.valueOf(gold.getMass()) + " g");
+                        imgView.setImage(gold.getImage());
+                        break;
+                        
+                    case "Human":
+                        nameLbl.setText(human.getName());
+                        massLbl.setText("Mass = " + String.valueOf(human.getMass()) + " g");
+                        imgView.setImage(human.getImage());
+                        break; 
+                        
+                    case "Gorilla":
+                        nameLbl.setText(gorilla.getName());
+                        massLbl.setText("Mass = " + String.valueOf(gorilla.getMass()) + " g");
+                        imgView.setImage(gorilla.getImage());
+                        break;    
+                        
+                    case "Bugatti Chiron":
+                        nameLbl.setText(car.getName());
+                        massLbl.setText("Mass = " + String.valueOf(car.getMass()) + " g");
+                        imgView.setImage(car.getImage());
+                        break;    
+                }
+            }
+        });
     }
 
 }

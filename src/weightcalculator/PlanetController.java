@@ -1,6 +1,5 @@
 package weightcalculator;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -93,4 +92,6 @@ public class PlanetController {
         });
 
     }
+    
+    // method for button set on action -> should return back to the main screen and confirm the planet selection (maybe add another void method to return the selected acceleration)
 }
