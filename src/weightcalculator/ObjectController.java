@@ -33,14 +33,16 @@ public class ObjectController {
 
     @FXML
     private Label nameLbl;
-    
+
     private String[] objectStrs;
     private String selectedObject;
     private Object[] objects;
-    private Parent root;
-    private Scene scene;
-    private Stage stage;
+    private MainController mc;
     
+    public void setMainController(MainController main) {
+        this.mc = main;
+    }
+
     @FXML
     public void initialize() {
         Object apple = new Object("Apple", 100, new Image("images/apple.jpg"));
@@ -49,13 +51,13 @@ public class ObjectController {
         Object human = new Object("Human", 70000, new Image("images/person.png"));
         Object gorilla = new Object("Gorilla", 160000, new Image("images/gorilla.png"));
         Object car = new Object("Bugatti Chiron", 2000000, new Image("images/car.png"));
-        
+
         objectStrs = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"};
         objects = new Object[]{apple, books, gold, human, gorilla, car};
-        
+
         listView.getItems().addAll(objectStrs);
         //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
+
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov, String oldVal, String newVal) {
@@ -78,47 +80,51 @@ public class ObjectController {
                         imgView.setImage(books.getImage());
                         addBtn.setDisable(false);
                         break;
-                        
+
                     case "Gold bar":
                         nameLbl.setText(gold.getName());
                         massLbl.setText("Mass = " + String.valueOf(gold.getMass()) + " g");
                         imgView.setImage(gold.getImage());
                         addBtn.setDisable(false);
                         break;
-                        
+
                     case "Human":
                         nameLbl.setText(human.getName());
                         massLbl.setText("Mass = " + String.valueOf(human.getMass()) + " g");
                         imgView.setImage(human.getImage());
                         addBtn.setDisable(false);
-                        break; 
-                        
+                        break;
+
                     case "Gorilla":
                         nameLbl.setText(gorilla.getName());
                         massLbl.setText("Mass = " + String.valueOf(gorilla.getMass()) + " g");
                         imgView.setImage(gorilla.getImage());
                         addBtn.setDisable(false);
-                        break;    
-                        
+                        break;
+
                     case "Bugatti Chiron":
                         nameLbl.setText(car.getName());
                         massLbl.setText("Mass = " + String.valueOf(car.getMass()) + " g");
                         imgView.setImage(car.getImage());
                         addBtn.setDisable(false);
-                        break;    
+                        break;
                 }
             }
         });
     }
-    
-        @FXML
-    void addToScale(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        
+
+    @FXML
+    void handleAdd(ActionEvent event) throws IOException {
+        String selected = listView.getSelectionModel().getSelectedItem();
+        for (int i = 0; i < objectStrs.length; i++) {
+            if (objectStrs[i].equals(selected)) {
+                Image image = objects[i].getImage();
+                mc.updateImage(image);
+            }
+        }
+        // find the object of the chosen list item
+        // then take its image and display it on the main screen
+
     }
 
 }

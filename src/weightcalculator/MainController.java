@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -61,6 +62,10 @@ public class MainController {
     
     @FXML
     private ImageView imgView;
+    
+    public void updateImage(Image image) {
+        imgView.setImage(image);
+    }
 
     @FXML
     public void initialize() {
@@ -77,8 +82,15 @@ public class MainController {
     // open object select screen
     @FXML
     void openObjectMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("objectScreen.fxml"));
-        Stage stage = (Stage) menuBar.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("objectScreen.fxml"));
+        Parent root = loader.load();
+        
+        ObjectController oc = loader.getController();
+        oc.setMainController(this);
+        
+        Stage stage = new Stage();
+        //stage = (Stage) menuBar.getScene().getWindow();
+        stage.setTitle("Object Menu");
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -88,6 +100,7 @@ public class MainController {
     void openPlanetMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("planetScreen.fxml"));
         Stage stage = (Stage) menuBar.getScene().getWindow();
+        stage.setTitle("Planet Menu");
         stage.setScene(new Scene(root));
         stage.show();
     }

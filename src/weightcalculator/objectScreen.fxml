@@ -21,7 +21,7 @@
             <HBox layoutX="176.0" layoutY="693.0" spacing="300.0">
                <children>
                   <Label fx:id="massLbl" text="Mass = 0kg" />
-                  <Button fx:id="addBtn" disable="true" mnemonicParsing="false" onAction="#addToScale" text="Add to scale" />
+                  <Button fx:id="addBtn" disable="true" mnemonicParsing="false" onAction="#handleAdd" text="Add to scale" />
                </children>
             </HBox>
          </children></AnchorPane>
