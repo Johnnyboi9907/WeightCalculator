@@ -32,6 +32,7 @@ public class ObjectController {
     private Object[] objects;
     private Object selectedObject;
     private MainController mc;
+    public boolean ready;
 
     public void setMainController(MainController main) {
         this.mc = main;
@@ -53,11 +54,13 @@ public class ObjectController {
         Object human = new Object("Human", 70000, new Image("images/person.png"));
         Object gorilla = new Object("Gorilla", 160000, new Image("images/gorilla.png"));
         Object car = new Object("Bugatti Chiron", 2000000, new Image("images/car.png"));
+        
+        ready = false;
 
-        items = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"}; // an array containing the names of the items on the listview
+        items = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"}; // initialize an array of Strings containing the names of the items on the listview
         objects = new Object[]{apple, books, gold, human, gorilla, car}; // an array containing all the objects
 
-        listView.getItems().addAll(items);
+        listView.getItems().addAll(items); // add the array of item names into the list
         //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -124,6 +127,7 @@ public class ObjectController {
                 this.setSelectedObject(objects[i]);
                 Image image = objects[i].getImage();
                 mc.updateImage(image);
+                ready = true;
             }
         }
     }

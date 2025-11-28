@@ -1,5 +1,6 @@
 package weightcalculator;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,11 +32,24 @@ public class PlanetController {
 
     @FXML
     private Button selectBtn;
-    
-    @FXML
-    private Button returnBtn;
 
-    private String[] planets;
+    private String[] items;
+    private Planet[] planets;
+    private Planet selectedPlanet;
+    private MainController mc;
+    public boolean ready;
+
+    public void setMainController(MainController main) {
+        this.mc = main;
+    }
+
+    public Planet getSelectedPlanet() {
+        return selectedPlanet;
+    }
+
+    public void setSelectedPlanet(Planet selectedPlanet) {
+        this.selectedPlanet = selectedPlanet;
+    }
 
     @FXML
     public void initialize() {
@@ -46,14 +60,12 @@ public class PlanetController {
         Planet jupiter = new Planet("Jupiter", 24.5, new Image("images/Jupiter.png"));
         Planet sun = new Planet("Sun", 275, new Image("images/Sun.jpg"));
         
-        selectBtn.setDisable(true);
-        selectBtn.setVisible(false);
+        ready = false;
 
-        // create an array of Strings containing all the names of the planets
-        planets = new String[]{"Earth", "Moon", "Mars", "Venus", "Jupiter", "Sun"};
+        items = new String[]{"Earth", "Moon", "Mars", "Venus", "Jupiter", "Sun"}; // initialize an array of Strings containing the names of the items on the listview
+        planets = new Planet[]{earth, moon, mars, venus, jupiter, sun}; // an array containing all the planets
 
-        // Add all Planet objects to ListView
-        listView.getItems().addAll(planets);
+        listView.getItems().addAll(items); // add the array of item names into the list
 
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -69,7 +81,6 @@ public class PlanetController {
                         accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(earth.getAcceleration()) + " m/s\u00B2");
                         imgView.setImage(earth.getImage());
                         selectBtn.setDisable(false);
-                        selectBtn.setVisible(true);
                         break;
 
                     case "Moon":
@@ -77,7 +88,6 @@ public class PlanetController {
                         accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(moon.getAcceleration()) + " m/s\u00B2");
                         imgView.setImage(moon.getImage());
                         selectBtn.setDisable(false);
-                        selectBtn.setVisible(true);
                         break;
 
                     case "Mars":
@@ -85,7 +95,6 @@ public class PlanetController {
                         accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(mars.getAcceleration()) + " m/s\u00B2");
                         imgView.setImage(mars.getImage());
                         selectBtn.setDisable(false);
-                        selectBtn.setVisible(true);
                         break;
 
                     case "Venus":
@@ -93,7 +102,6 @@ public class PlanetController {
                         accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(venus.getAcceleration()) + " m/s\u00B2");
                         imgView.setImage(venus.getImage());
                         selectBtn.setDisable(false);
-                        selectBtn.setVisible(true);
                         break;
 
                     case "Jupiter":
@@ -101,7 +109,6 @@ public class PlanetController {
                         accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(jupiter.getAcceleration()) + " m/s\u00B2");
                         imgView.setImage(jupiter.getImage());
                         selectBtn.setDisable(false);
-                        selectBtn.setVisible(true);
                         break;
 
                     case "Sun":
@@ -109,28 +116,22 @@ public class PlanetController {
                         accelerationLbl.setText("Acceleration due to gravity = " + String.valueOf(sun.getAcceleration()) + " m/s\u00B2");
                         imgView.setImage(sun.getImage());
                         selectBtn.setDisable(false);
-                        selectBtn.setVisible(true);
                         break;
                 }
             }
         });
 
     }
-    
+
+    // find the object of the chosen list view item and then take its image and display it on the main screen (on the scale)
     @FXML
-    void handleReturn(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/weightcalculator/mainScreen.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) returnBtn.getScene().getWindow();
-            Scene mainScene = new Scene(root);
-            stage.setScene(mainScene);
-            
-        } catch (Exception e) {
-            
+    void handleSelect(ActionEvent event) throws IOException {
+        String selected = listView.getSelectionModel().getSelectedItem();
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].equals(selected)) {
+                this.setSelectedPlanet(planets[i]);
+                ready = true;
+            }
         }
-        
     }
-    
-    // method for button set on action -> should return back to the main screen and confirm the planet selection (maybe add another void method to return the selected acceleration)
 }

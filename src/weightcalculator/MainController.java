@@ -71,8 +71,6 @@ public class MainController {
         imgView.setImage(image);
     }
 
-
-
     @FXML
     public void initialize() {
 
@@ -105,8 +103,15 @@ public class MainController {
     // open planet select screen
     @FXML
     void openPlanetMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("planetScreen.fxml"));
-        Stage stage = (Stage) menuBar.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("planetScreen.fxml"));
+        Parent root = loader.load();
+
+        PlanetController pc = loader.getController();
+        pc.setMainController(this);
+        this.pc = pc;
+
+        Stage stage = new Stage();
+        //stage = (Stage) menuBar.getScene().getWindow();
         stage.setTitle("Planet Menu");
         stage.setScene(new Scene(root));
         stage.show();
@@ -115,9 +120,13 @@ public class MainController {
     @FXML
     void handleRun(ActionEvent event) {
         mass = oc.getSelectedObject().getMass() / 1000;
-        acceleration = 9.8;
-        weight = mass * acceleration;
-        weightLbl.setText("Weight = " + String.valueOf(weight) + " kg");
+        acceleration = pc.getSelectedPlanet().getAcceleration();
+
+        if (oc.ready && pc.ready) {
+            weight = mass * acceleration;
+            weightLbl.setText("Weight = " + String.valueOf(weight) + " kg");
+        }
+// TODO: figure out a way to not throw a null pointer exception when a mass or a planet is NOT picked after pressing "run"
     }
 
 }
