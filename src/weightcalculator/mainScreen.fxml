@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="scenePane" prefHeight="800.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.MainController">
+<AnchorPane id="AnchorPane" fx:id="scenePane" prefHeight="800.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.MainController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
@@ -31,7 +31,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem fx:id="runBtn" mnemonicParsing="false" text="Run" />
+              <MenuItem fx:id="runBtn" mnemonicParsing="false" onAction="#handleRun" text="Run" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="closeBtn" mnemonicParsing="false" onAction="#closeProgram" text="Close" />
             </items>

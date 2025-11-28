@@ -5,17 +5,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 public class ObjectController {
 
@@ -34,15 +28,24 @@ public class ObjectController {
     @FXML
     private Label nameLbl;
 
-    private String[] objectStrs;
-    private String selectedObject;
+    private String[] items;
     private Object[] objects;
+    private Object selectedObject;
     private MainController mc;
-    
+    public boolean ready;
+
     public void setMainController(MainController main) {
         this.mc = main;
     }
 
+    public Object getSelectedObject() {
+        return selectedObject;
+    }
+
+    public void setSelectedObject(Object selectedObject) {
+        this.selectedObject = selectedObject;
+    }
+    
     @FXML
     public void initialize() {
         Object apple = new Object("Apple", 100, new Image("images/apple.jpg"));
@@ -51,11 +54,13 @@ public class ObjectController {
         Object human = new Object("Human", 70000, new Image("images/person.png"));
         Object gorilla = new Object("Gorilla", 160000, new Image("images/gorilla.png"));
         Object car = new Object("Bugatti Chiron", 2000000, new Image("images/car.png"));
+        
+        ready = false;
 
-        objectStrs = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"};
-        objects = new Object[]{apple, books, gold, human, gorilla, car};
+        items = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"}; // initialize an array of Strings containing the names of the items on the listview
+        objects = new Object[]{apple, books, gold, human, gorilla, car}; // an array containing all the objects
 
-        listView.getItems().addAll(objectStrs);
+        listView.getItems().addAll(items); // add the array of item names into the list
         //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -113,18 +118,18 @@ public class ObjectController {
         });
     }
 
+    // find the object of the chosen list view item and then take its image and display it on the main screen (on the scale)
     @FXML
     void handleAdd(ActionEvent event) throws IOException {
         String selected = listView.getSelectionModel().getSelectedItem();
-        for (int i = 0; i < objectStrs.length; i++) {
-            if (objectStrs[i].equals(selected)) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].equals(selected)) {
+                this.setSelectedObject(objects[i]);
                 Image image = objects[i].getImage();
                 mc.updateImage(image);
+                ready = true;
             }
         }
-        // find the object of the chosen list item
-        // then take its image and display it on the main screen
-
     }
 
 }
@@ -136,4 +141,4 @@ public class ObjectController {
  * mass of a human = 70 kg = 70000g
  * mass of a gorilla = 160kg = 160000g
  * mass of a bugatti chiron = 2000kg = 2000000g
-*/
+ */
