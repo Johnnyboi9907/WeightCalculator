@@ -57,6 +57,18 @@ public class MainController {
 
     @FXML
     private ImageView imgView;
+    
+    @FXML
+    private Label errorlbl;
+    
+    @FXML
+    private Label selectedPlanetlbl;
+
+    @FXML
+    private PlanetController planetPaneController;  
+    
+    @FXML
+    private ImageView planetSelectediv;
 
     private Stage stage;
     private Scene scene;
@@ -66,6 +78,10 @@ public class MainController {
     private double acceleration;
     private ObjectController oc;
     private PlanetController pc;
+
+    public void setPlanetController(PlanetController controller) {
+        this.pc = controller;
+    }
 
     public void updateImage(Image image) {
         imgView.setImage(image);
@@ -105,28 +121,53 @@ public class MainController {
     void openPlanetMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("planetScreen.fxml"));
         Parent root = loader.load();
+        pc = loader.getController();
 
-        PlanetController pc = loader.getController();
-        pc.setMainController(this);
-        this.pc = pc;
+        // Inject both ways
+        this.setPlanetController(pc);     // MainController → PlanetController
+        pc.setMainController(this);       // PlanetController → MainController ✅
 
         Stage stage = new Stage();
-        //stage = (Stage) menuBar.getScene().getWindow();
-        stage.setTitle("Planet Menu");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
+
+
+
     @FXML
     void handleRun(ActionEvent event) {
+
+        if ((oc == null || !oc.ready) && (pc == null || !pc.ready)) {
+            errorlbl.setText("No objects or planets were selected");
+            return;
+        }
+        
+        if (oc == null || !oc.ready) {
+            errorlbl.setText("No objects were selected");
+            return;
+        }
+
+        if (pc == null || !pc.ready) {
+            errorlbl.setText("No planet are selected");
+            return;
+        }
+        
+        // empties error label if there was an error before
+        errorlbl.setText(" ");
+
         mass = oc.getSelectedObject().getMass() / 1000;
         acceleration = pc.getSelectedPlanet().getAcceleration();
 
-        if (oc.ready && pc.ready) {
-            weight = mass * acceleration;
-            weightLbl.setText("Weight = " + String.valueOf(weight) + " kg");
-        }
-// TODO: figure out a way to not throw a null pointer exception when a mass or a planet is NOT picked after pressing "run"
+        weight = mass * acceleration;
+        weightLbl.setText(weight + " N");
     }
+    public void updateSelectedPlanet(String planetName, Image image) {
+        planetSelectediv.setImage(image);
+        selectedPlanetlbl.setText(planetName);
+    }
+    
+    
+
 
 }
