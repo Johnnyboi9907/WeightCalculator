@@ -14,11 +14,13 @@ public class Planet {
     private String name;
     private double acceleration;
     private Image image;
+    private Image semiImage;
 
-    public Planet(String name, double acceleration, Image image) {
+    public Planet(String name, double acceleration, Image image, Image semiImage) {
         this.name = name;
         this.acceleration = acceleration;
         this.image = image;
+        this.semiImage = semiImage;
     }
 
     public String getName() {
@@ -43,6 +45,14 @@ public class Planet {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+    
+    public Image getSemiImage() {
+        return semiImage;
+    }
+
+    public void setSemiImage(Image semiImage) {
+        this.semiImage = semiImage;
     }
     
     

@@ -38,6 +38,11 @@ public class PlanetController {
     private Planet selectedPlanet;
     private MainController mc;
     public boolean ready;
+    private Image semiImage;
+
+    public Image getSemiImage() {
+        return semiImage;
+    }
 
     public void setMainController(MainController main) {
         this.mc = main;
@@ -53,13 +58,30 @@ public class PlanetController {
 
     @FXML
     public void initialize() {
-        Planet earth = new Planet("Earth", 9.8, new Image("images/Earth.jpg"));
-        Planet moon = new Planet("Moon", 1.6, new Image("images/Moon.jpg"));
-        Planet mars = new Planet("Mars", 3.7, new Image("images/Mars.png"));
-        Planet venus = new Planet("Venus", 8.87, new Image("images/Venus.jpg"));
-        Planet jupiter = new Planet("Jupiter", 24.5, new Image("images/Jupiter.png"));
-        Planet sun = new Planet("Sun", 275, new Image("images/Sun.jpg"));
-        
+        Planet earth = new Planet("Earth", 9.8,
+                new Image(getClass().getResourceAsStream("/images/Earth.jpg")),
+                new Image(getClass().getResourceAsStream("/images/EarthSemi.jpg")));
+
+        Planet moon = new Planet("Moon", 1.6,
+                new Image(getClass().getResourceAsStream("/images/Moon.jpg")),
+                new Image(getClass().getResourceAsStream("/images/MoonSemi.jpg")));
+
+        Planet mars = new Planet("Mars", 3.7,
+                new Image(getClass().getResourceAsStream("/images/Mars.png")),
+                new Image(getClass().getResourceAsStream("/images/MarsSemi.png")));
+
+        Planet venus = new Planet("Venus", 8.87,
+                new Image(getClass().getResourceAsStream("/images/Venus.jpg")),
+                new Image(getClass().getResourceAsStream("/images/VenusSemi.jpg")));
+
+        Planet jupiter = new Planet("Jupiter", 24.5,
+                new Image(getClass().getResourceAsStream("/images/Jupiter.png")),
+                new Image(getClass().getResourceAsStream("/images/JupiterSemi.png")));
+
+        Planet sun = new Planet("Sun", 275,
+                new Image(getClass().getResourceAsStream("/images/Sun.jpg")),
+                new Image(getClass().getResourceAsStream("/images/SunSemi.jpg")));
+
         ready = false;
 
         items = new String[]{"Earth", "Moon", "Mars", "Venus", "Jupiter", "Sun"}; // initialize an array of Strings containing the names of the items on the listview
@@ -127,11 +149,21 @@ public class PlanetController {
     @FXML
     void handleSelect(ActionEvent event) throws IOException {
         String selected = listView.getSelectionModel().getSelectedItem();
+
         for (int i = 0; i < items.length; i++) {
             if (items[i].equals(selected)) {
                 this.setSelectedPlanet(planets[i]);
                 ready = true;
+
+                // Send semi image to main screen
+                if (mc != null) {
+                    mc.updateSelectedPlanet(planets[i].getName(), planets[i].getSemiImage());
+                }
             }
         }
+
+        Stage stage = (Stage) selectBtn.getScene().getWindow();
+        stage.close();
     }
+
 }
