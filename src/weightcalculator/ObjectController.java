@@ -171,31 +171,46 @@ public class ObjectController {
     void handleAdd(ActionEvent event) {
         String selected = listView.getSelectionModel().getSelectedItem();
 
+        // Prevent adding more than 5 objects
+        if (mc.getObjectCount() >= 5) {
+            showAlert(Alert.AlertType.WARNING, "Limit Reached", "You can only add up to 5 objects.");
+            return;
+        }
+
         if (selected.equals("Custom")) {
-            // Alert if textfield is empty
             if (customMasstf.getText().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, "Missing Mass", "Please enter a mass before adding the custom object.");
                 return;
             }
 
             int customMass = (int) customMassSlider.getValue();
-            Object customObject = new Object("Custom Object", customMass, null); // no image
+
+            // Load placeholder image for custom objects
+            Image customImage;
+            try {
+                customImage = new Image(getClass().getResource("/images/custom.png").toExternalForm());
+            } catch (NullPointerException e) {
+                // fallback if image not found
+                customImage = null;
+            }
+
+            Object customObject = new Object("Custom Object", customMass, customImage);
             this.setSelectedObject(customObject);
-            mc.updateObjectDisplay(customObject.getName(), null); // update main screen
+
+            // Pass name, image, and mass to MainController
+            mc.updateObjectDisplay(customObject.getName(), customImage, customMass);
             ready = true;
         } else {
-            // Loop through predefined objects
             for (int i = 0; i < items.length - 1; i++) { // exclude "Custom"
                 if (items[i].equals(selected)) {
                     this.setSelectedObject(objects[i]);
-                    Image image = objects[i].getImage();
-                    mc.updateObjectDisplay(objects[i].getName(), image);
+                    Object obj = objects[i];
+                    mc.updateObjectDisplay(obj.getName(), obj.getImage(), obj.getMass());
                     ready = true;
                 }
             }
         }
 
-        // Close the object menu window
         Stage window = (Stage) addBtn.getScene().getWindow();
         window.close();
     }
