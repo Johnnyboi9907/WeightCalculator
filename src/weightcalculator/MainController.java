@@ -223,22 +223,104 @@ public class MainController {
     }
     
     public void reset() {
-        if (imgView != null) imgView.setImage(null);
-        if (planetSelectediv != null) planetSelectediv.setImage(null);
-        if (selectedPlanetlbl != null) selectedPlanetlbl.setText("No planet selected");
-        if (weightLbl != null) weightLbl.setText(" ");
-        if (errorlbl != null) errorlbl.setText(" ");
-        
+        System.out.println("[DEBUG] reset() called");
+
+        // Reuse clear to ensure objects/images/list are cleaned
+        clear();
+
+        // Clear planet visuals + label
+        if (planetSelectediv != null) {
+            planetSelectediv.setImage(null);
+        }
+        if (selectedPlanetlbl != null) {
+            selectedPlanetlbl.setText("No planet selected");
+        }
+
+        // Reset planet controller reference so user must reselect
+        if (pc != null) {
+            try {
+                pc.ready = false;
+            } catch (Exception ignored) {
+            }
+            pc = null;
+        }
+
+        // Also reset object controller reference if you want fresh state
+        if (oc != null) {
+            try {
+                oc.ready = false;
+            } catch (Exception ignored) {
+            }
+            oc = null;
+        }
+
+        // Ensure weight/error labels are blank
+        if (weightLbl != null) {
+            weightLbl.setText(" ");
+        }
+        if (errorlbl != null) {
+            errorlbl.setText(" ");
+        }
+
+        // Final sanity prints
+        System.out.println("[DEBUG] reset complete - objectCount=" + objectCount
+                + ", massesOnScale=" + massesOnScale.size()
+                + ", pc=" + (pc == null) + ", oc=" + (oc == null));
     }
+    
+    public void clear() {
+        System.out.println("[DEBUG] clear() called");
+
+        if (objectImg1 != null) {
+            objectImg1.setImage(null);
+        }
+        if (objectImg2 != null) {
+            objectImg2.setImage(null);
+        }
+        if (objectImg3 != null) {
+            objectImg3.setImage(null);
+        }
+        if (objectImg4 != null) {
+            objectImg4.setImage(null);
+        }
+        if (objectImg5 != null) {
+            objectImg5.setImage(null);
+        }
+
+        objectCount = 0;
+        massesOnScale.clear();      // important: remove stored masses
+        System.out.println("[DEBUG] massesOnScale.size() after clear(): " + massesOnScale.size());
+
+        // clear displayed single object image if used
+        if (imgView != null) {
+            imgView.setImage(null);
+        }
+
+        // clear object label + displayed weight and error
+        if (selectedObjectlbl != null) {
+            selectedObjectlbl.setText("No object selected");
+        }
+        if (weightLbl != null) {
+            weightLbl.setText(" ");
+        }
+        if (errorlbl != null) {
+            errorlbl.setText(" ");
+        }
+
+        // reset internal physics values
+        weight = 0;
+        mass = 0;
+        acceleration = 0;
+
+        // don't null planet controller here (reset() will do it) — but if you want to force reselect, uncomment:
+        // if (oc != null) { try { oc.ready = false; } catch(Exception ignored) {} oc = null; }
+        System.out.println("[DEBUG] clear() complete: objectCount=" + objectCount + " weight=" + weight);
+    }
+
       // clears the scale
     @FXML 
     void handleClear(ActionEvent event) {
-//        objectImg1.setImage(null);
-//        objectImg2.setImage(null);
-//        objectImg3.setImage(null);
-//        objectImg4.setImage(null);
-//        objectImg5.setImage(null);
-//        objectCount = 0;
+        clear();
     }
     
     // resets the program (scale, planet, object)
