@@ -176,4 +176,37 @@ public class MainController {
         planetSelectediv.setImage(image);
         selectedPlanetlbl.setText(planetName);
     }
+    
+    public void reset() {
+        if (imgView != null) imgView.setImage(null);
+        if (planetSelectediv != null) planetSelectediv.setImage(null);
+        if (selectedPlanetlbl != null) selectedPlanetlbl.setText("No planet selected");
+        if (weightLbl != null) weightLbl.setText(" ");
+        if (errorlbl != null) errorlbl.setText(" ");
+        
+    }
+      // clears the scale
+    @FXML 
+    void handleClear(ActionEvent event) {
+//        objectImg1.setImage(null);
+//        objectImg2.setImage(null);
+//        objectImg3.setImage(null);
+//        objectImg4.setImage(null);
+//        objectImg5.setImage(null);
+//        objectCount = 0;
+    }
+    
+    // resets the program (scale, planet, object)
+    @FXML
+    void handleReset(ActionEvent event) {
+        reset();
+        
+        
+    }
+    
+    // undoes the last action
+    @FXML
+    void handleUndo(ActionEvent event) {
+        
+    }
 }
