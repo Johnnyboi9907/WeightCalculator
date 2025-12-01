@@ -254,4 +254,8 @@ public class MainController {
     void handleUndo(ActionEvent event) {
         
     }
+    
+    public int getObjectCount() {
+        return objectCount;
+    }
 }

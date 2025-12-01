@@ -62,7 +62,7 @@
             <Font name="System Bold Italic" size="50.0" />
          </font>
       </Label>
-      <Label fx:id="errorlbl" alignment="CENTER" layoutX="320.0" layoutY="397.0" prefHeight="17.0" prefWidth="375.0" text="   " textFill="#db0202" />
+      <Label fx:id="errorlbl" alignment="CENTER" layoutX="320.0" layoutY="417.0" prefHeight="17.0" prefWidth="375.0" textFill="#db0202" />
       <HBox alignment="CENTER" layoutX="21.0" layoutY="242.0" prefHeight="155.0" prefWidth="960.0" spacing="10.0">
          <children>
             <ImageView fx:id="objectImg1" fitHeight="148.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" />
