@@ -5,6 +5,8 @@ package weightcalculator;
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +41,16 @@ public class MainController {
     @FXML
     private MenuItem runBtn;
     @FXML
+    private ImageView objectImg1;
+    @FXML
+    private ImageView objectImg2;
+    @FXML
+    private ImageView objectImg3;
+    @FXML
+    private ImageView objectImg4;
+    @FXML
+    private ImageView objectImg5;
+    @FXML
     private AnchorPane scenePane;
     @FXML
     private MenuItem undoBtn;
@@ -64,6 +76,8 @@ public class MainController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    
+    private int objectCount = 0;
 
     // Physics values
     private double weight;
@@ -83,13 +97,41 @@ public class MainController {
         imgView.setImage(image);
     }
 
-    // NEW: update both object image and label in main screen
-    public void updateObjectDisplay(String objectName, Image image) {
-        imgView.setImage(image);
+    private final List<Integer> massesOnScale = new ArrayList<>(); // grams
+
+// Called by ObjectController whenever an object is added
+    public void updateObjectDisplay(String objectName, Image image, int massGrams) {
+        // Set object label (optional)
         if (selectedObjectlbl != null) {
-            selectedObjectlbl.setText(objectName != null ? objectName : "No object selected");
+            selectedObjectlbl.setText("Object selected: " + (objectName != null ? objectName : "none"));
+        }
+
+        // Place image into next slot (max 5)
+        if (image != null && objectCount < 5) {
+            switch (objectCount) {
+                case 0:
+                    objectImg1.setImage(image);
+                    break;
+                case 1:
+                    objectImg2.setImage(image);
+                    break;
+                case 2:
+                    objectImg3.setImage(image);
+                    break;
+                case 3:
+                    objectImg4.setImage(image);
+                    break;
+                case 4:
+                    objectImg5.setImage(image);
+                    break;
+            }
+            objectCount++;
+            massesOnScale.add(massGrams); // track mass for calculation
+        } else if (objectCount >= 5) {
+            errorlbl.setText("You can only add up to 5 objects.");
         }
     }
+
 
     @FXML
     public void initialize() {
@@ -142,13 +184,13 @@ public class MainController {
     void handleRun(ActionEvent event) {
 
         // guard clauses for missing selections
-        if ((oc == null || !oc.ready) && (pc == null || !pc.ready)) {
+        if (massesOnScale.isEmpty() && (pc == null || !pc.ready)) {
             errorlbl.setText("No objects or planets were selected");
             return;
         }
 
-        if (oc == null || !oc.ready) {
-            errorlbl.setText("No objects were selected");
+        if (massesOnScale.isEmpty()) {
+            errorlbl.setText("No objects were added to the scale");
             return;
         }
 
@@ -160,20 +202,27 @@ public class MainController {
         // empties error label if there was an error before
         errorlbl.setText(" ");
 
-        // mass in kg: object mass is stored in grams
-        mass = oc.getSelectedObject().getMass() / 1000.0;
+        // Sum mass in kg
+        double totalMassKg = 0.0;
+        for (int m : massesOnScale) {
+            totalMassKg += m / 1000.0;
+        }
 
-        // planet acceleration in m/s^2
-        acceleration = pc.getSelectedPlanet().getAcceleration();
-
-        // weight = m * g (Newtons)
-        weight = mass * acceleration;
-        weightLbl.setText(weight + " N");
+        double acceleration = pc.getSelectedPlanet().getAcceleration(); // m/s^2
+        double weight = totalMassKg * acceleration; // Newtons
+        // %.2f makes it 2 deigits after decimal point
+        weightLbl.setText(String.format("%.2f N", weight));
     }
+
+    
 
     // Update planet image and label in main screen (called by PlanetController)
     public void updateSelectedPlanet(String planetName, Image image) {
         planetSelectediv.setImage(image);
         selectedPlanetlbl.setText(planetName);
+    }
+    
+    public int getObjectCount() {
+        return objectCount;
     }
 }
