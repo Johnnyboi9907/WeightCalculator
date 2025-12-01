@@ -3,10 +3,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
 <SplitPane fx:id="splitpane" dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.ObjectController">
   <items>
@@ -14,16 +17,23 @@
          <children>
             <ListView fx:id="listView" layoutX="-12.0" layoutY="52.0" prefHeight="397.3333333333333" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: black;">
          <children>
             <ImageView fx:id="imgView" fitHeight="400.0" fitWidth="400.0" layoutX="163.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="nameLbl" layoutX="328.0" layoutY="110.0" text="Object Name" />
-            <HBox layoutX="176.0" layoutY="693.0" spacing="300.0">
+            <Label fx:id="nameLbl" layoutX="328.0" layoutY="110.0" text="  " />
+            <HBox layoutX="102.0" layoutY="693.0" prefHeight="30.0" prefWidth="587.0" spacing="300.0">
                <children>
-                  <Label fx:id="massLbl" text="Mass = 0kg" />
-                  <Button fx:id="addBtn" disable="true" mnemonicParsing="false" onAction="#handleAdd" text="Add to scale" />
+                  <Label fx:id="massLbl" prefHeight="58.0" prefWidth="160.0" text="Mass = 0 g" textFill="WHITE" />
+                  <Button fx:id="addBtn" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#handleAdd" style="-fx-background-color: white;" text="Add to scale" />
                </children>
             </HBox>
+            <Slider fx:id="customMassSlider" blockIncrement="1.0" layoutX="100.0" layoutY="729.0" max="1000000.0" min="1.0" prefHeight="24.0" prefWidth="457.0" value="1000.0" />
+            <Label fx:id="customMasslbl" alignment="CENTER" layoutX="216.0" layoutY="211.0" prefHeight="377.0" prefWidth="302.0" style="-fx-background-color: white;" text="  ">
+               <font>
+                  <Font name="System Bold" size="58.0" />
+               </font>
+            </Label>
+            <TextField fx:id="customMasstf" layoutX="102.0" layoutY="753.0" promptText="Enter Custom Mass" style="-fx-background-color: white;" />
          </children></AnchorPane>
   </items>
 </SplitPane>

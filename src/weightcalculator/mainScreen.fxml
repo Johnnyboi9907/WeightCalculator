@@ -16,8 +16,8 @@
         <URL value="@styles.css" />
     </stylesheets>
    <children>
-      <ImageView fx:id="planetSelectediv" fitHeight="165.0" fitWidth="375.0" layoutX="298.0" layoutY="616.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="286.0" layoutY="57.0" text="Weight Calculator" textFill="WHITE">
+      <ImageView fx:id="planetSelectediv" fitHeight="303.0" fitWidth="621.0" layoutX="197.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="282.0" layoutY="27.0" text="Weight Calculator" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="50.0" />
          </font>
@@ -46,22 +46,22 @@
             </Menu>
         </menus>
       </MenuBar>
-      <ImageView fx:id="imgView" fitHeight="17.0" fitWidth="300.0" layoutX="350.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="errorlbl" alignment="CENTER" layoutX="313.0" layoutY="659.0" prefHeight="17.0" prefWidth="375.0" text="   " textFill="#db0202" />
-      <Label fx:id="selectedPlanetlbl" alignment="CENTER" layoutX="349.0" layoutY="749.0" prefHeight="17.0" prefWidth="316.0" text="Planet selected: none" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="353.0" fitWidth="919.0" layoutX="48.0" layoutY="408.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgView" fitHeight="245.0" fitWidth="582.0" layoutX="205.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="353.0" fitWidth="706.0" layoutX="213.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/scale.png" />
          </image>
       </ImageView>
-      <Label fx:id="weightLbl" alignment="CENTER" layoutX="333.0" layoutY="555.0" prefHeight="73.0" prefWidth="334.0" text="0 N">
+      <Label fx:id="selectedPlanetlbl" alignment="CENTER" layoutX="338.0" layoutY="636.0" prefHeight="17.0" prefWidth="316.0" text="Planet selected: none" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="weightLbl" alignment="CENTER" layoutX="329.0" layoutY="504.0" prefHeight="73.0" prefWidth="334.0" text="0 N">
          <font>
             <Font name="System Bold Italic" size="50.0" />
          </font>
       </Label>
+      <Label fx:id="errorlbl" alignment="CENTER" layoutX="320.0" layoutY="397.0" prefHeight="17.0" prefWidth="375.0" text="   " textFill="#db0202" />
    </children>
 </AnchorPane>

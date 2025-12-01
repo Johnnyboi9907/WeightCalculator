@@ -21,61 +21,56 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author 2483268
+ * Handles menus, opening object/planet selection screens, displaying selected
+ * object/planet, and calculating weight.
  */
 public class MainController {
 
     @FXML
     private MenuItem clearBtn;
-
     @FXML
     private MenuItem closeBtn;
-
     @FXML
     private MenuItem objectBtn;
-
     @FXML
     private MenuItem planetBtn;
-
     @FXML
     private MenuItem resetBtn;
-
     @FXML
     private MenuItem runBtn;
-
     @FXML
     private AnchorPane scenePane;
-
     @FXML
     private MenuItem undoBtn;
-
     @FXML
     private Label weightLbl;
-
     @FXML
     private MenuBar menuBar;
+    @FXML
+    private ImageView imgView;              // image of selected object
+    @FXML
+    private Label errorlbl;                 // error messages
+    @FXML
+    private Label selectedPlanetlbl;        // name of selected planet
+    @FXML
+    private PlanetController planetPaneController;
+    @FXML
+    private ImageView planetSelectediv;     // image of selected planet
 
+    // NEW: label to show selected object name (add it in your main FXML)
     @FXML
-    private ImageView imgView;
-    
-    @FXML
-    private Label errorlbl;
-    
-    @FXML
-    private Label selectedPlanetlbl;
-
-    @FXML
-    private PlanetController planetPaneController;  
-    
-    @FXML
-    private ImageView planetSelectediv;
+    private Label selectedObjectlbl;
 
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    // Physics values
     private double weight;
-    private double mass;
-    private double acceleration;
+    private double mass;          // in kg (object mass in grams / 1000)
+    private double acceleration;  // m/s^2 (planet gravity)
+
+    // References to child controllers
     private ObjectController oc;
     private PlanetController pc;
 
@@ -83,13 +78,24 @@ public class MainController {
         this.pc = controller;
     }
 
+    // Legacy method kept for compatibility (updates only the image)
     public void updateImage(Image image) {
         imgView.setImage(image);
     }
 
+    // NEW: update both object image and label in main screen
+    public void updateObjectDisplay(String objectName, Image image) {
+        imgView.setImage(image);
+        if (selectedObjectlbl != null) {
+            selectedObjectlbl.setText(objectName != null ? objectName : "No object selected");
+        }
+    }
+
     @FXML
     public void initialize() {
-
+        // You can set initial UI state here if needed
+        // e.g., selectedObjectlbl.setText("No object selected");
+        //       selectedPlanetlbl.setText("No planet selected");
     }
 
     // close the program
@@ -106,11 +112,10 @@ public class MainController {
         Parent root = loader.load();
 
         ObjectController oc = loader.getController();
-        oc.setMainController(this);
+        oc.setMainController(this);  // Inject MainController into ObjectController
         this.oc = oc;
 
         Stage stage = new Stage();
-        //stage = (Stage) menuBar.getScene().getWindow();
         stage.setTitle("Object Menu");
         stage.setScene(new Scene(root));
         stage.show();
@@ -124,25 +129,24 @@ public class MainController {
         pc = loader.getController();
 
         // Inject both ways
-        this.setPlanetController(pc);     // MainController → PlanetController
-        pc.setMainController(this);       // PlanetController → MainController ✅
+        this.setPlanetController(pc);   // MainController → PlanetController
+        pc.setMainController(this);     // PlanetController → MainController
 
         Stage stage = new Stage();
+        stage.setTitle("Planet Menu");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
-
-
-
     @FXML
     void handleRun(ActionEvent event) {
 
+        // guard clauses for missing selections
         if ((oc == null || !oc.ready) && (pc == null || !pc.ready)) {
             errorlbl.setText("No objects or planets were selected");
             return;
         }
-        
+
         if (oc == null || !oc.ready) {
             errorlbl.setText("No objects were selected");
             return;
@@ -152,22 +156,24 @@ public class MainController {
             errorlbl.setText("No planet are selected");
             return;
         }
-        
+
         // empties error label if there was an error before
         errorlbl.setText(" ");
 
-        mass = oc.getSelectedObject().getMass() / 1000;
+        // mass in kg: object mass is stored in grams
+        mass = oc.getSelectedObject().getMass() / 1000.0;
+
+        // planet acceleration in m/s^2
         acceleration = pc.getSelectedPlanet().getAcceleration();
 
+        // weight = m * g (Newtons)
         weight = mass * acceleration;
         weightLbl.setText(weight + " N");
     }
+
+    // Update planet image and label in main screen (called by PlanetController)
     public void updateSelectedPlanet(String planetName, Image image) {
         planetSelectediv.setImage(image);
         selectedPlanetlbl.setText(planetName);
     }
-    
-    
-
-
 }

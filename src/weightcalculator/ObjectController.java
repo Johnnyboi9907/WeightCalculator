@@ -1,48 +1,44 @@
 package weightcalculator;
 
-import java.io.IOException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * Controller for the Object selection screen. Handles predefined objects and a
+ * custom object where the user can set mass via slider or textfield.
+ */
 public class ObjectController {
 
+    // UI elements injected from FXML
     @FXML
     private Button addBtn;
-
     @FXML
     private ImageView imgView;
-
     @FXML
     private ListView<String> listView;
-
     @FXML
     private Label massLbl;
-
     @FXML
     private Label nameLbl;
-    
     @FXML
     private SplitPane splitpane;
+    @FXML
+    private Slider customMassSlider;
+    @FXML
+    private Label customMasslbl;
+    @FXML
+    private TextField customMasstf;
 
+    // Data structures
     private String[] items;
     private Object[] objects;
     private Object selectedObject;
     private MainController mc;
     public boolean ready;
-    private Stage stage;
 
     public void setMainController(MainController main) {
         this.mc = main;
@@ -55,102 +51,165 @@ public class ObjectController {
     public void setSelectedObject(Object selectedObject) {
         this.selectedObject = selectedObject;
     }
-    
+
     @FXML
     public void initialize() {
+        // Create predefined objects with name, mass (grams), and image
         Object apple = new Object("Apple", 100, new Image("images/apple.jpg"));
         Object books = new Object("Pile of books", 700, new Image("images/books.png"));
         Object gold = new Object("Gold bar", 1000, new Image("images/goldbar.png"));
         Object human = new Object("Human", 70000, new Image("images/person.png"));
         Object gorilla = new Object("Gorilla", 160000, new Image("images/gorilla.png"));
         Object car = new Object("Bugatti Chiron", 2000000, new Image("images/car.png"));
-        
+
         addBtn.setDisable(true);
-        
+
+        // Hide custom controls initially
+        customMassSlider.setVisible(false);
+        customMasstf.setVisible(false);
+        customMasslbl.setVisible(false);
+
+        // Default slider value
+        customMassSlider.setValue(1000);
+
         ready = false;
 
-        items = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron"}; // initialize an array of Strings containing the names of the items on the listview
-        objects = new Object[]{apple, books, gold, human, gorilla, car}; // an array containing all the objects
+        // Populate listView with object names
+        items = new String[]{"Apple", "Pile of books", "Gold bar", "Human", "Gorilla", "Bugatti Chiron", "Custom"};
+        objects = new Object[]{apple, books, gold, human, gorilla, car};
+        listView.getItems().addAll(items);
 
-        listView.getItems().addAll(items); // add the array of item names into the list
-        //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // Listener: keep slider and textfield in sync
+        customMassSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            int customMass = newVal.intValue();
+            customMasstf.setText(String.valueOf(customMass));
+            customMasslbl.setText(customMass + " g");
+            massLbl.setText("Mass = " + customMass + " g");
+        });
 
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> ov, String oldVal, String newVal) {
+        // Listener: validate textfield input and update slider/labels
+        customMasstf.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal.isEmpty()) {
+                return;
+            }
+            try {
+                int value = Integer.parseInt(newVal);
 
-                if (newVal == null) {
-                    return;
+                if (value <= 0) {
+                    showAlert(Alert.AlertType.WARNING, "Invalid Mass", "Mass must be greater than 0 g.");
+                    value = 1;
+                } else if (value > 1000000) {
+                    showAlert(Alert.AlertType.WARNING, "Invalid Mass", "Mass cannot exceed 1,000,000 g.");
+                    value = 1000000;
                 }
 
-                switch (newVal) {
-                    case "Apple":
-                        nameLbl.setText(apple.getName());
-                        massLbl.setText("Mass = " + String.valueOf(apple.getMass()) + " g");
-                        imgView.setImage(apple.getImage());
-                        addBtn.setDisable(false);
-                        break;
+                customMassSlider.setValue(value);
+                massLbl.setText("Mass = " + value + " g");
+                customMasslbl.setText(value + " g");
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter a valid number for mass.");
+                customMasstf.setText(oldVal); // revert to last valid value
+            }
+        });
 
-                    case "Pile of books":
-                        nameLbl.setText(books.getName());
-                        massLbl.setText("Mass = " + String.valueOf(books.getMass()) + " g");
-                        imgView.setImage(books.getImage());
-                        addBtn.setDisable(false);
-                        break;
+        // Listener: handle selection from listView
+        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal == null) {
+                return;
+            }
 
-                    case "Gold bar":
-                        nameLbl.setText(gold.getName());
-                        massLbl.setText("Mass = " + String.valueOf(gold.getMass()) + " g");
-                        imgView.setImage(gold.getImage());
-                        addBtn.setDisable(false);
-                        break;
-
-                    case "Human":
-                        nameLbl.setText(human.getName());
-                        massLbl.setText("Mass = " + String.valueOf(human.getMass()) + " g");
-                        imgView.setImage(human.getImage());
-                        addBtn.setDisable(false);
-                        break;
-
-                    case "Gorilla":
-                        nameLbl.setText(gorilla.getName());
-                        massLbl.setText("Mass = " + String.valueOf(gorilla.getMass()) + " g");
-                        imgView.setImage(gorilla.getImage());
-                        addBtn.setDisable(false);
-                        break;
-
-                    case "Bugatti Chiron":
-                        nameLbl.setText(car.getName());
-                        massLbl.setText("Mass = " + String.valueOf(car.getMass()) + " g");
-                        imgView.setImage(car.getImage());
-                        addBtn.setDisable(false);
-                        break;
-                }
+            switch (newVal) {
+                case "Apple":
+                    setObjectDisplay(apple);
+                    break;
+                case "Pile of books":
+                    setObjectDisplay(books);
+                    break;
+                case "Gold bar":
+                    setObjectDisplay(gold);
+                    break;
+                case "Human":
+                    setObjectDisplay(human);
+                    break;
+                case "Gorilla":
+                    setObjectDisplay(gorilla);
+                    break;
+                case "Bugatti Chiron":
+                    setObjectDisplay(car);
+                    break;
+                case "Custom":
+                    nameLbl.setText("Custom Object");
+                    imgView.setImage(null); // no image for custom
+                    customMassSlider.setValue(1000);
+                    customMasstf.setText("1000");
+                    massLbl.setText("Mass = 1000 g");
+                    customMasslbl.setText("1000 g");
+                    customMassSlider.setVisible(true);
+                    customMasstf.setVisible(true);
+                    customMasslbl.setVisible(true);
+                    addBtn.setDisable(false);
+                    break;
             }
         });
     }
 
-    // find the object of the chosen list view item and then take its image and display it on the main screen (on the scale)
+    // Helper method to set display for predefined objects
+    private void setObjectDisplay(Object obj) {
+        nameLbl.setText(obj.getName());
+        massLbl.setText("Mass = " + obj.getMass() + " g");
+        imgView.setImage(obj.getImage());
+        addBtn.setDisable(false);
+
+        // Hide custom controls when a predefined object is selected
+        customMassSlider.setVisible(false);
+        customMasstf.setVisible(false);
+        customMasslbl.setVisible(false);
+    }
+
+    // Handle Add button click
     @FXML
     void handleAdd(ActionEvent event) {
         String selected = listView.getSelectionModel().getSelectedItem();
 
-        for (int i = 0; i < items.length; i++) {
-            if (items[i].equals(selected)) {
-                this.setSelectedObject(objects[i]);
-                Image image = objects[i].getImage();
-                mc.updateImage(image);
-                ready = true;
+        if (selected.equals("Custom")) {
+            // Alert if textfield is empty
+            if (customMasstf.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Missing Mass", "Please enter a mass before adding the custom object.");
+                return;
+            }
+
+            int customMass = (int) customMassSlider.getValue();
+            Object customObject = new Object("Custom Object", customMass, null); // no image
+            this.setSelectedObject(customObject);
+            mc.updateObjectDisplay(customObject.getName(), null); // update main screen
+            ready = true;
+        } else {
+            // Loop through predefined objects
+            for (int i = 0; i < items.length - 1; i++) { // exclude "Custom"
+                if (items[i].equals(selected)) {
+                    this.setSelectedObject(objects[i]);
+                    Image image = objects[i].getImage();
+                    mc.updateObjectDisplay(objects[i].getName(), image);
+                    ready = true;
+                }
             }
         }
 
-        // close the object menu window
+        // Close the object menu window
         Stage window = (Stage) addBtn.getScene().getWindow();
         window.close();
     }
 
-
+    // Reusable alert method
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
+
 /*
  * List of objects:
  * mass of an apple = 100g
