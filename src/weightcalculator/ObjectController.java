@@ -15,30 +15,30 @@ public class ObjectController {
 
     // UI elements injected from FXML
     @FXML
-    private Button addBtn;
+    Button addBtn;
     @FXML
-    private ImageView imgView;
+    ImageView imgView;
     @FXML
-    private ListView<String> listView;
+    ListView<String> listView;
     @FXML
-    private Label massLbl;
+    Label massLbl;
     @FXML
-    private Label nameLbl;
+    Label nameLbl;
     @FXML
-    private SplitPane splitpane;
+    SplitPane splitpane;
     @FXML
-    private Slider customMassSlider;
+    Slider customMassSlider;
     @FXML
-    private Label customMasslbl;
+    Label customMasslbl;
     @FXML
-    private TextField customMasstf;
+    TextField customMasstf;
 
     // Data structures
-    private String[] items;
-    private Object[] objects;
-    private Object selectedObject;
-    private MainController mc;
-    public boolean ready;
+    String[] items;
+    Object[] objects;
+    Object selectedObject;
+    MainController mc;
+    boolean ready;
 
     public void setMainController(MainController main) {
         this.mc = main;
@@ -154,7 +154,7 @@ public class ObjectController {
     }
 
     // Helper method to set display for predefined objects
-    private void setObjectDisplay(Object obj) {
+    public void setObjectDisplay(Object obj) {
         nameLbl.setText(obj.getName());
         massLbl.setText("Mass = " + obj.getMass() + " g");
         imgView.setImage(obj.getImage());
@@ -216,7 +216,7 @@ public class ObjectController {
     }
 
     // Reusable alert method
-    private void showAlert(Alert.AlertType type, String title, String message) {
+    public void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
