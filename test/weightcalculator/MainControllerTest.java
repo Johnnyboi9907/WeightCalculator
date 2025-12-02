@@ -4,9 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +30,10 @@ public class MainControllerTest {
     static void initToolkit() {
         Platform.startup(() -> {
         });
+    }
+
+    @AfterAll
+    public static void tearDownClass() throws Exception {
     }
 
     @BeforeEach
@@ -50,6 +57,10 @@ public class MainControllerTest {
         mainController.setPlanetController(mockPlanetController);
         mainController.pc = mockPlanetController;
         mainController.oc = mockObjectController;
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
     }
 
     @Test
@@ -122,5 +133,201 @@ public class MainControllerTest {
         assertEquals(0, mainController.getObjectCount());
         assertNull(mainController.objectImg1.getImage());
         assertEquals(" ", mainController.weightLbl.getText());
+    }
+
+    /**
+     * Test of setPlanetController method, of class MainController.
+     */
+    @Test
+    public void testSetPlanetController() {
+        System.out.println("setPlanetController");
+        PlanetController controller = null;
+        MainController instance = new MainController();
+        instance.setPlanetController(controller);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updateImage method, of class MainController.
+     */
+    @Test
+    public void testUpdateImage() {
+        System.out.println("updateImage");
+        Image image = null;
+        MainController instance = new MainController();
+        instance.updateImage(image);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updateObjectDisplay method, of class MainController.
+     */
+    @Test
+    public void testUpdateObjectDisplay() {
+        System.out.println("updateObjectDisplay");
+        String objectName = "";
+        Image image = null;
+        int massGrams = 0;
+        MainController instance = new MainController();
+        instance.updateObjectDisplay(objectName, image, massGrams);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of initialize method, of class MainController.
+     */
+    @Test
+    public void testInitialize() {
+        System.out.println("initialize");
+        MainController instance = new MainController();
+        instance.initialize();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of closeProgram method, of class MainController.
+     */
+    @Test
+    public void testCloseProgram() {
+        System.out.println("closeProgram");
+        ActionEvent event = null;
+        MainController instance = new MainController();
+        instance.closeProgram(event);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of openObjectMenu method, of class MainController.
+     */
+    @Test
+    public void testOpenObjectMenu() throws Exception {
+        System.out.println("openObjectMenu");
+        ActionEvent event = null;
+        MainController instance = new MainController();
+        instance.openObjectMenu(event);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of openPlanetMenu method, of class MainController.
+     */
+    @Test
+    public void testOpenPlanetMenu() throws Exception {
+        System.out.println("openPlanetMenu");
+        ActionEvent event = null;
+        MainController instance = new MainController();
+        instance.openPlanetMenu(event);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of handleRun method, of class MainController.
+     */
+    @Test
+    public void testHandleRun() {
+        System.out.println("handleRun");
+        ActionEvent event = null;
+        MainController instance = new MainController();
+        instance.handleRun(event);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updateSelectedPlanet method, of class MainController.
+     */
+    @Test
+    public void testUpdateSelectedPlanet() {
+        System.out.println("updateSelectedPlanet");
+        String planetName = "";
+        Image image = null;
+        MainController instance = new MainController();
+        instance.updateSelectedPlanet(planetName, image);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of reset method, of class MainController.
+     */
+    @Test
+    public void testReset() {
+        System.out.println("reset");
+        MainController instance = new MainController();
+        instance.reset();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clear method, of class MainController.
+     */
+    @Test
+    public void testClear() {
+        System.out.println("clear");
+        MainController instance = new MainController();
+        instance.clear();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of handleClear method, of class MainController.
+     */
+    @Test
+    public void testHandleClear() {
+        System.out.println("handleClear");
+        ActionEvent event = null;
+        MainController instance = new MainController();
+        instance.handleClear(event);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of handleReset method, of class MainController.
+     */
+    @Test
+    public void testHandleReset() {
+        System.out.println("handleReset");
+        ActionEvent event = null;
+        MainController instance = new MainController();
+        instance.handleReset(event);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of undoLastObject method, of class MainController.
+     */
+    @Test
+    public void testUndoLastObject() {
+        System.out.println("undoLastObject");
+        ActionEvent event = null;
+        MainController instance = new MainController();
+        instance.undoLastObject(event);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getObjectCount method, of class MainController.
+     */
+    @Test
+    public void testGetObjectCount() {
+        System.out.println("getObjectCount");
+        MainController instance = new MainController();
+        int expResult = 0;
+        int result = instance.getObjectCount();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

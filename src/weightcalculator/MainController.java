@@ -213,112 +213,102 @@ public class MainController {
         selectedPlanetlbl.setText(planetName);
     }
     
-    public void reset() {
-        System.out.println("[DEBUG] reset() called");
-
-        // Reuse clear to ensure objects/images/list are cleaned
-        clear();
-
-        // Clear planet visuals + label
-        if (planetSelectediv != null) {
-            planetSelectediv.setImage(null);
-        }
-        if (selectedPlanetlbl != null) {
-            selectedPlanetlbl.setText("No planet selected");
-        }
-
-        // Reset planet controller reference so user must reselect
-        if (pc != null) {
-            try {
-                pc.ready = false;
-            } catch (Exception ignored) {
-            }
-            pc = null;
-        }
-
-        // Also reset object controller reference if you want fresh state
-        if (oc != null) {
-            try {
-                oc.ready = false;
-            } catch (Exception ignored) {
-            }
-            oc = null;
-        }
-
-        // Ensure weight/error labels are blank
-        if (weightLbl != null) {
-            weightLbl.setText(" ");
-        }
-        if (errorlbl != null) {
-            errorlbl.setText(" ");
-        }
-
-        // Final sanity prints
-        System.out.println("[DEBUG] reset complete - objectCount=" + objectCount
-                + ", massesOnScale=" + massesOnScale.size()
-                + ", pc=" + (pc == null) + ", oc=" + (oc == null));
-    }
-    
-    public void clear() {
-        System.out.println("[DEBUG] clear() called");
-
-        if (objectImg1 != null) {
-            objectImg1.setImage(null);
-        }
-        if (objectImg2 != null) {
-            objectImg2.setImage(null);
-        }
-        if (objectImg3 != null) {
-            objectImg3.setImage(null);
-        }
-        if (objectImg4 != null) {
-            objectImg4.setImage(null);
-        }
-        if (objectImg5 != null) {
-            objectImg5.setImage(null);
-        }
-
-        objectCount = 0;
-        massesOnScale.clear();      // important: remove stored masses
-
-        // clear displayed single object image if used
-        if (imgView != null) {
-            imgView.setImage(null);
-        }
-        if (weightLbl != null) {
-            weightLbl.setText(" ");
-        }
-        if (errorlbl != null) {
-            errorlbl.setText(" ");
-        }
-
-        // reset internal physics values
-        weight = 0;
-        mass = 0;
-        acceleration = 0;
-
-        // don't null planet controller here (reset() will do it) — but if you want to force reselect, uncomment:
-        // if (oc != null) { try { oc.ready = false; } catch(Exception ignored) {} oc = null; }
-    }
-
-      // clears the scale
-    @FXML 
+    @FXML
     void handleClear(ActionEvent event) {
-        clear();
+        // Clear only the object overlay images
+        objectImg1.setImage(null);
+        objectImg2.setImage(null);
+        objectImg3.setImage(null);
+        objectImg4.setImage(null);
+        objectImg5.setImage(null);
+
+        // Reset state
+        massesOnScale.clear();
+        objectCount = 0;
+        weightLbl.setText("0 N");
+        errorlbl.setText(" ");
+        
     }
-    
-    // resets the program (scale, planet, object)
+
     @FXML
     void handleReset(ActionEvent event) {
-        reset();
+        // Clear object images
+        objectImg1.setImage(null);
+        objectImg2.setImage(null);
+        objectImg3.setImage(null);
+        objectImg4.setImage(null);
+        objectImg5.setImage(null);
+
+        // Clear planet image
+        planetSelectediv.setImage(null);
+
+        // Reset all state
+        massesOnScale.clear();
+        objectCount = 0;
+        weightLbl.setText("0 N");
+        errorlbl.setText(" ");
         
-        
+        if (selectedPlanetlbl != null) {
+            selectedPlanetlbl.setText("Planet selected: none");
+        }
+
+        // Reset controller flags
+        if (oc != null) {
+            oc.ready = false;
+        }
+        if (pc != null) {
+            pc.ready = false;
+        }
     }
     
-    // undoes the last action
     @FXML
     void handleUndo(ActionEvent event) {
-        
+        if (objectCount == 0) {
+            errorlbl.setText("No objects to undo.");
+            return;
+        }
+
+        // Remove last image
+        switch (objectCount - 1) {
+            case 0:
+                objectImg1.setImage(null);
+                break;
+            case 1:
+                objectImg2.setImage(null);
+                break;
+            case 2:
+                objectImg3.setImage(null);
+                break;
+            case 3:
+                objectImg4.setImage(null);
+                break;
+            case 4:
+                objectImg5.setImage(null);
+                break;
+        }
+
+        // Remove last mass
+        if (!massesOnScale.isEmpty()) {
+            massesOnScale.remove(massesOnScale.size() - 1);
+        }
+
+        objectCount--;
+
+        // Recalculate weight
+        double totalMassKg = 0.0;
+        for (int m : massesOnScale) {
+            totalMassKg += m / 1000.0;
+        }
+
+        if (pc != null && pc.ready) {
+            double acceleration = pc.getSelectedPlanet().getAcceleration();
+            double weight = totalMassKg * acceleration;
+            weightLbl.setText(String.format("%.2f N", weight));
+        } else {
+            weightLbl.setText("0 N");
+        }
+
+        errorlbl.setText("Last object removed.");
     }
     
     public int getObjectCount() {

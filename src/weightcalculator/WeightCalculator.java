@@ -3,6 +3,7 @@ package weightcalculator;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+github: https://github.com/Johnnyboi9907/WeightCalculator
  */
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
