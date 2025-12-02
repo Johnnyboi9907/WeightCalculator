@@ -29,49 +29,45 @@ import javafx.stage.Stage;
 public class MainController {
 
     @FXML
-    private MenuItem clearBtn;
+    MenuItem clearBtn;
     @FXML
-    private MenuItem closeBtn;
+    MenuItem closeBtn;
     @FXML
-    private MenuItem objectBtn;
+    MenuItem objectBtn;
     @FXML
-    private MenuItem planetBtn;
+    MenuItem planetBtn;
     @FXML
-    private MenuItem resetBtn;
+    MenuItem resetBtn;
     @FXML
-    private MenuItem runBtn;
+    MenuItem runBtn;
     @FXML
-    private ImageView objectImg1;
+    ImageView objectImg1;
     @FXML
-    private ImageView objectImg2;
+    ImageView objectImg2;
     @FXML
-    private ImageView objectImg3;
+    ImageView objectImg3;
     @FXML
-    private ImageView objectImg4;
+    ImageView objectImg4;
     @FXML
-    private ImageView objectImg5;
+    ImageView objectImg5;
     @FXML
-    private AnchorPane scenePane;
+    AnchorPane scenePane;
     @FXML
-    private MenuItem undoBtn;
+    MenuItem undoBtn;
     @FXML
-    private Label weightLbl;
+    Label weightLbl;
     @FXML
-    private MenuBar menuBar;
+    MenuBar menuBar;
     @FXML
-    private ImageView imgView;              // image of selected object
+    ImageView imgView;              // image of selected object
     @FXML
-    private Label errorlbl;                 // error messages
+    Label errorlbl;                 // error messages
     @FXML
-    private Label selectedPlanetlbl;        // name of selected planet
+    Label selectedPlanetlbl;        // name of selected planet
     @FXML
-    private PlanetController planetPaneController;
+    PlanetController planetPaneController;
     @FXML
-    private ImageView planetSelectediv;     // image of selected planet
-
-    // NEW: label to show selected object name (add it in your main FXML)
-    @FXML
-    private Label selectedObjectlbl;
+    ImageView planetSelectediv;     // image of selected planet
 
     private Stage stage;
     private Scene scene;
@@ -85,8 +81,8 @@ public class MainController {
     private double acceleration;  // m/s^2 (planet gravity)
 
     // References to child controllers
-    private ObjectController oc;
-    private PlanetController pc;
+    ObjectController oc;
+    PlanetController pc;
 
     public void setPlanetController(PlanetController controller) {
         this.pc = controller;
@@ -101,11 +97,6 @@ public class MainController {
 
 // Called by ObjectController whenever an object is added
     public void updateObjectDisplay(String objectName, Image image, int massGrams) {
-        // Set object label (optional)
-        if (selectedObjectlbl != null) {
-            selectedObjectlbl.setText("Object selected: " + (objectName != null ? objectName : "none"));
-        }
-
         // Place image into next slot (max 5)
         if (image != null && objectCount < 5) {
             switch (objectCount) {
@@ -289,16 +280,10 @@ public class MainController {
 
         objectCount = 0;
         massesOnScale.clear();      // important: remove stored masses
-        System.out.println("[DEBUG] massesOnScale.size() after clear(): " + massesOnScale.size());
 
         // clear displayed single object image if used
         if (imgView != null) {
             imgView.setImage(null);
-        }
-
-        // clear object label + displayed weight and error
-        if (selectedObjectlbl != null) {
-            selectedObjectlbl.setText("No object selected");
         }
         if (weightLbl != null) {
             weightLbl.setText(" ");
@@ -314,7 +299,6 @@ public class MainController {
 
         // don't null planet controller here (reset() will do it) — but if you want to force reselect, uncomment:
         // if (oc != null) { try { oc.ready = false; } catch(Exception ignored) {} oc = null; }
-        System.out.println("[DEBUG] clear() complete: objectCount=" + objectCount + " weight=" + weight);
     }
 
       // clears the scale

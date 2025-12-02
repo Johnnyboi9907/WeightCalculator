@@ -19,26 +19,26 @@ import javafx.stage.Stage;
 public class PlanetController {
 
     @FXML
-    private Label accelerationLbl;
+    Label accelerationLbl;
 
     @FXML
-    private ImageView imgView;
+    ImageView imgView;
 
     @FXML
-    private ListView<String> listView;
+    ListView<String> listView;
 
     @FXML
-    private Label nameLbl;
+    Label nameLbl;
 
     @FXML
-    private Button selectBtn;
+    Button selectBtn;
 
-    private String[] items;
-    private Planet[] planets;
-    private Planet selectedPlanet;
-    private MainController mc;
-    public boolean ready;
-    private Image semiImage;
+    String[] items;
+    Planet[] planets;
+    Planet selectedPlanet;
+    MainController mc;
+    boolean ready;
+    Image semiImage;
 
     public Image getSemiImage() {
         return semiImage;
