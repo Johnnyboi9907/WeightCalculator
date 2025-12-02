@@ -214,8 +214,6 @@ public class MainController {
     }
     
     public void reset() {
-        System.out.println("[DEBUG] reset() called");
-
         // Reuse clear to ensure objects/images/list are cleaned
         clear();
 
@@ -252,15 +250,9 @@ public class MainController {
         if (errorlbl != null) {
             errorlbl.setText(" ");
         }
-
-        // Final sanity prints
-        System.out.println("[DEBUG] reset complete - objectCount=" + objectCount
-                + ", massesOnScale=" + massesOnScale.size()
-                + ", pc=" + (pc == null) + ", oc=" + (oc == null));
     }
     
     public void clear() {
-        System.out.println("[DEBUG] clear() called");
 
         if (objectImg1 != null) {
             objectImg1.setImage(null);
@@ -318,7 +310,52 @@ public class MainController {
     // undoes the last action
     @FXML
     void handleUndo(ActionEvent event) {
-        
+        if (objectCount == 0) {
+            errorlbl.setText("No objects to undo.");
+            return;
+        }
+
+        // Remove last image
+        switch (objectCount - 1) {
+            case 0:
+                objectImg1.setImage(null);
+                break;
+            case 1:
+                objectImg2.setImage(null);
+                break;
+            case 2:
+                objectImg3.setImage(null);
+                break;
+            case 3:
+                objectImg4.setImage(null);
+                break;
+            case 4:
+                objectImg5.setImage(null);
+                break;
+        }
+
+        // Remove last mass
+        if (!massesOnScale.isEmpty()) {
+            massesOnScale.remove(massesOnScale.size() - 1);
+        }
+
+        objectCount--;
+
+        // Recalculate weight
+        double totalMassKg = 0.0;
+        for (int m : massesOnScale) {
+            totalMassKg += m / 1000.0;
+        }
+
+        if (pc != null && pc.ready) {
+            double acceleration = pc.getSelectedPlanet().getAcceleration();
+            double weight = totalMassKg * acceleration;
+            weightLbl.setText(String.format("%.2f N", weight));
+        } else {
+            weightLbl.setText("0 N");
+        }
+
+        errorlbl.setText("Last object removed.");
     }
     
     public int getObjectCount() {
