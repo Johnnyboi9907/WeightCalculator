@@ -65,8 +65,6 @@ public class MainController {
     @FXML
     Label selectedPlanetlbl;        // name of selected planet
     @FXML
-    PlanetController planetPaneController;
-    @FXML
     ImageView planetSelectediv;     // image of selected planet
 
     private Stage stage;

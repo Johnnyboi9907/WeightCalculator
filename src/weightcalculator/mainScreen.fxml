@@ -13,6 +13,11 @@
 
 <AnchorPane fx:id="scenePane" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.MainController">
    <children>
+      <Label fx:id="titleLbl" layoutX="182.0" layoutY="46.0" text="Weight Calculator" textFill="WHITE">
+         <font>
+            <Font name="Rockwell Extra Bold" size="60.0" />
+         </font>
+      </Label>
       <ImageView fx:id="planetSelectediv" fitHeight="303.0" fitWidth="621.0" layoutX="197.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true" />
       <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="1000.0">
         <menus>
@@ -43,7 +48,7 @@
             <Image url="@../images/scale.png" />
          </image>
       </ImageView>
-      <Label fx:id="selectedPlanetlbl" alignment="CENTER" layoutX="338.0" layoutY="636.0" prefHeight="17.0" prefWidth="316.0" style="-fx-background-color: black;" text="Planet selected: none" textFill="WHITE">
+      <Label fx:id="selectedPlanetlbl" alignment="CENTER" layoutX="338.0" layoutY="636.0" prefHeight="17.0" prefWidth="316.0" text="Planet selected: none" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -63,10 +68,5 @@
             <ImageView fx:id="objectImg5" fitHeight="150.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
-      <Label layoutX="176.0" layoutY="90.0" text="Weight Calculator" textFill="WHITE">
-         <font>
-            <Font name="Rockwell Extra Bold" size="60.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>
