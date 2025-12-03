@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -12,17 +11,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="scenePane" style="-fx-background-color: black;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.MainController">
-    <stylesheets>
-        <URL value="@styles.css" />
-    </stylesheets>
+<AnchorPane fx:id="scenePane" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weightcalculator.MainController">
    <children>
-      <ImageView fx:id="planetSelectediv" fitHeight="303.0" fitWidth="621.0" layoutX="197.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="282.0" layoutY="27.0" text="Weight Calculator" textFill="WHITE">
+      <Label fx:id="titleLbl" layoutX="182.0" layoutY="46.0" text="Weight Calculator" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="50.0" />
+            <Font name="Rockwell Extra Bold" size="60.0" />
          </font>
       </Label>
+      <ImageView fx:id="planetSelectediv" fitHeight="303.0" fitWidth="621.0" layoutX="197.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true" />
       <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="1000.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -52,7 +48,7 @@
             <Image url="@../images/scale.png" />
          </image>
       </ImageView>
-      <Label fx:id="selectedPlanetlbl" alignment="CENTER" layoutX="338.0" layoutY="636.0" prefHeight="17.0" prefWidth="316.0" style="-fx-background-color: black;" text="Planet selected: none" textFill="WHITE">
+      <Label fx:id="selectedPlanetlbl" alignment="CENTER" layoutX="338.0" layoutY="636.0" prefHeight="17.0" prefWidth="316.0" text="Planet selected: none" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
