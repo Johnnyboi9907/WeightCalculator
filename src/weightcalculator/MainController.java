@@ -70,8 +70,6 @@ public class MainController {
     ImageView planetSelectediv;     // image of selected planet
 
     private Stage stage;
-    private Scene scene;
-    private Parent root;
     
     private int objectCount = 0;
 
