@@ -41,7 +41,6 @@ THEO GABRIAL:
 - Created alerts for the custom object (invalid mass number, mass number too large)
 - Error catching (no selected planet or objects will result in the program displaying a warning message)
 - Junit Testing (unsuccessful, but tried his best)
-- Event handling for Undo, Clear scale, and Reset buttons in the Menu option of the menu bar
 - Displayed an image of the currently selected planet in the main screen
 - Fixed and overlooked the semantics and syntax of the code
 
@@ -58,6 +57,14 @@ JOHN ALEXIOU:
 DAVID AYOUB:
 - Created the planet and object classes along with the proper attributes & methods
 - Created the main screen controller
+- Event handling for Undo button
+- Troubleshooting in the fxml files due to errors
+- Created the getters and setters for the main screen controller
+- Implemented the object display method
+- Implemented the event handling for the clear scale and reset buttons in the Menu option of the menu bar
+- Event handling for return button
+- Implementation of logic to disable actions if certain requirements weren't met
+- Implemented some of the logic regarding the images in the display
 
 
 **Notes**
