@@ -64,3 +64,5 @@ DAVID AYOUB:
 - Images referenced via `getResourceAsStream("/images/...")` must exist in resources.
 - UI styles are in `styles.css`.
 
+  **Challenges Encountered**
+
