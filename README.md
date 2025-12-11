@@ -43,6 +43,8 @@ THEO GABRIAL:
 - Junit Testing (unsuccessful, but tried his best)
 - Displayed an image of the currently selected planet in the main screen
 - Fixed and overlooked the semantics and syntax of the code
+- Implemented the event handling for the clear scale and reset buttons in the Menu option of the menu bar
+
 
 JOHN ALEXIOU:
 - GUI design for main screen, planet screen and object screen (using scenebuilder)
@@ -61,10 +63,6 @@ DAVID AYOUB:
 - Troubleshooting in the fxml files due to errors
 - Created the getters and setters for the main screen controller
 - Implemented the object display method
-- Implemented the event handling for the clear scale and reset buttons in the Menu option of the menu bar
-- Event handling for return button
-- Implementation of logic to disable actions if certain requirements weren't met
-- Implemented some of the logic regarding the images in the display
 
 
 **Notes**
