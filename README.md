@@ -64,5 +64,17 @@ DAVID AYOUB:
 - Images referenced via `getResourceAsStream("/images/...")` must exist in resources.
 - UI styles are in `styles.css`.
 
-  **Challenges Encountered**
+**Challenges Encountered**
+- Trouble with merging
+- Branch confusions
+- Difficulties displaying the objects on the scale (Overlap)
 
+**Solutions Implemented**
+- Made new branches entirely
+- Sent each other the code to merge
+- Set the limit of objects to 5 by creating 5 ImgViews
+
+**Lessons Learned**
+- Better to simply start because the idea will come together as we go on instead of planning everything ahead
+- Sometimes we had to take a step back to see the true problem
+- Don't be afraid to change the structure/plan to simplify or solve a problem
